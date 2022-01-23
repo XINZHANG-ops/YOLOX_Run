@@ -9,6 +9,10 @@ yolo_cls/runs/
 train_data_person/
 object_detection_data/
 object_detection_data_classification/
+YOLOX/dataset/
+train/
+validation/
+YOLOX/YOLOX_outputs
 
 
 # Byte-compiled / optimized / DLL files
