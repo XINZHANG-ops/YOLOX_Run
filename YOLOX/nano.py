@@ -9,17 +9,48 @@ import torch.nn as nn
 from yolox.exp import Exp as MyExp
 
 
+# # find from 
+# # https://github.com/Megvii-BaseDetection/YOLOX
+
+# # yoloxm
+# class Exp(MyExp):
+#     def __init__(self):
+#         super(Exp, self).__init__()
+#         self.depth = 0.67
+#         self.width = 0.75
+#         self.input_size = (640, 640)
+#         self.mosaic_scale = (0.5, 1.5)
+#         self.random_size = (10, 20)
+#         self.test_size = (640, 640)
+#         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
+
+# # yoloxnano
+# class Exp(MyExp):
+#     def __init__(self):
+#         super(Exp, self).__init__()
+#         self.depth = 0.33
+#         self.width = 0.25
+#         self.input_size = (416, 416)
+#         self.mosaic_scale = (0.5, 1.5)
+#         self.random_size = (10, 20)
+#         self.test_size = (416, 416)
+#         self.exp_name = os.path.split(
+#             os.path.realpath(__file__))[1].split(".")[0]
+        
+
+
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
-        self.depth = 0.33
-        self.width = 0.25
-        self.input_size = (416, 416)
+        #read https://github.com/Megvii-BaseDetection/YOLOX/blob/main/docs/manipulate_training_image_size.md
+        # to understand settings
+        self.depth = 0.67
+        self.width = 0.75
+        self.input_size = (1600, 1600)
         self.mosaic_scale = (0.5, 1.5)
-        self.random_size = (10, 20)
-        self.test_size = (416, 416)
-        self.exp_name = os.path.split(
-            os.path.realpath(__file__))[1].split(".")[0]
+        self.multiscale_range = 0
+        self.test_size = (1600, 1600)
+        self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.enable_mixup = False
         
         # Define yourself dataset path
@@ -28,10 +59,14 @@ class Exp(MyExp):
         self.val_ann = "validation_annotations.json"
 
         self.num_classes = 9
-
-        self.max_epoch = 20
+        
+        # read https://github.com/Megvii-BaseDetection/YOLOX/blob/main/docs/train_custom_data.md
+        # to get settings
+        self.max_epoch = 60
+        self.no_aug_epochs = 15
+        self.min_lr_ratio = 0.05
         self.data_num_workers = 4
-        self.eval_interval = 1
+        self.eval_interval = 2
 
     def get_model(self, sublinear=False):
         def init_yolo(M):
