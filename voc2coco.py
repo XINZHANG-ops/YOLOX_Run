@@ -9,7 +9,15 @@ import xml.etree.ElementTree as ET
 import glob
 
 START_BOUNDING_BOX_ID = 1
-PRE_DEFINE_CATEGORIES = None
+PRE_DEFINE_CATEGORIES = {'nl_0438': 0,
+             'nl_0431': 1,
+             'nl_0239': 2,
+             'nl_0238': 3,
+             'nl_0271': 4,
+             'nl_0280': 5,
+             'nl_0433': 6,
+             'nl_0224': 7,
+             'nl_0098': 8}
 # If necessary, pre-define category and its id
 #  PRE_DEFINE_CATEGORIES = {"aeroplane": 1, "bicycle": 2, "bird": 3, "boat": 4,
 #  "bottle":5, "bus": 6, "car": 7, "cat": 8, "chair": 9,
