@@ -208,21 +208,25 @@ def image_demo(predictor, vis_folder, path, current_time, save_result):
             width = img_info['width']
             ratio = img_info["ratio"]
             output = outputs[0]
-            output_cpu = output.cpu()
-            bboxes = output_cpu[:, 0:4]
-            bboxes /= ratio
-            cls = output_cpu[:, 6]
-            scores = output_cpu[:, 4] * output_cpu[:, 5]
-            for box, cls, conf in zip(bboxes, cls, scores):
-                x1, y1, x2, y2 = box[0]/width, box[1]/height, box[2]/width, box[3]/height
-                x = (x1 + x2)/2
-                y = (y1 + y2)/2
-                w = x2 - x1
-                h = y2 - y1
-                cls = int(cls)
-                line = (cls, x, y, w, h, conf)
-                with open(save_txt_name, 'a') as f:
-                    f.write(('%g ' * len(line)).rstrip() % line + '\n')
+            if output is not None: 
+                output_cpu = output.cpu()
+                bboxes = output_cpu[:, 0:4]
+                bboxes /= ratio
+                cls = output_cpu[:, 6]
+                scores = output_cpu[:, 4] * output_cpu[:, 5]
+                for box, cls, conf in zip(bboxes, cls, scores):
+                    x1, y1, x2, y2 = box[0]/width, box[1]/height, box[2]/width, box[3]/height
+                    x = (x1 + x2)/2
+                    y = (y1 + y2)/2
+                    w = x2 - x1
+                    h = y2 - y1
+                    cls = int(cls)
+                    line = (cls, x, y, w, h, conf)
+                    with open(save_txt_name, 'a') as f:
+                        f.write(('%g ' * len(line)).rstrip() % line + '\n')
+            else:
+                with open(save_txt_name, 'w') as f:
+                    pass
             
             save_file_name = os.path.join(save_folder, os.path.basename(image_name))
             logger.info("Saving detection result in {}".format(save_file_name))

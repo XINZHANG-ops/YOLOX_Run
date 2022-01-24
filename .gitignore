@@ -1,4 +1,6 @@
 *.jpg
+*.png
+*.csv
 *.pt
 *.mp4
 *.zip
